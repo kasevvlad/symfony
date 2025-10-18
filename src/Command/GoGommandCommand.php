@@ -6,6 +6,8 @@ use App\Entity\Category;
 use App\Entity\Post;
 use App\Repository\CategoryRepository;
 use App\Repository\PostRepository;
+use App\Resource\PostResource;
+use App\ResponseBuilder\PostResponseBuilder;
 use App\Service\PostService;
 use App\Validator\PostValidator;
 use DateTime;
@@ -31,7 +33,8 @@ class GoGommandCommand extends Command
     public function __construct(
         private EntityManagerInterface $em,
         private PostService $postService,
-        private PostValidator $postValidator
+        private PostValidator $postValidator,
+        private PostResponseBuilder $postResponseBuilder
     )
     {
         parent::__construct();
@@ -61,6 +64,10 @@ class GoGommandCommand extends Command
         $this->postValidator->validate($post);
 
         $post = $this->postService->store($post);
+
+        $res = $this->postResponseBuilder->storePost($post);
+
+        dd($res);
 
         return Command::SUCCESS;
     }
