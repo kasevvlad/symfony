@@ -6,8 +6,11 @@ use App\Entity\Category;
 use App\Entity\Post;
 use App\Repository\CategoryRepository;
 use App\Repository\PostRepository;
+use App\Service\PostService;
+use App\Validator\PostValidator;
 use DateTime;
 use DateTimeImmutable;
+use Doctrine\DBAL\LockMode;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -17,6 +20,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 #[AsCommand(
     name: 'go',
@@ -25,8 +29,9 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class GoGommandCommand extends Command
 {
     public function __construct(
-        private PostRepository $postRepository,
-        private EntityManagerInterface $em
+        private EntityManagerInterface $em,
+        private PostService $postService,
+        private PostValidator $postValidator
     )
     {
         parent::__construct();
@@ -41,11 +46,11 @@ class GoGommandCommand extends Command
             'published_at' => '2025-12-20',
             'status' => 2,
             'category_id' => 1
-        ];
-
-        $category = $this->em->getRepository(Category::class)->find($data['category_id']);
+        ]; 
 
         $post = new Post();
+        $category = $this->em->getReference(Category::class, $data['category_id']);
+
         $post->setTitle($data['title']);
         $post->setDescription($data['description']);
         $post->setContent($data['content']);
@@ -53,8 +58,9 @@ class GoGommandCommand extends Command
         $post->setStatus($data['status']);
         $post->setCategory($category);
 
-        $this->em->persist($post);
-        $this->em->flush();
+        $this->postValidator->validate($post);
+
+        $post = $this->postService->store($post);
 
         return Command::SUCCESS;
     }
