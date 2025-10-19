@@ -4,6 +4,7 @@ namespace App\Command;
 
 use App\Entity\Category;
 use App\Entity\Post;
+use App\Factory\PostFactory;
 use App\Repository\CategoryRepository;
 use App\Repository\PostRepository;
 use App\Resource\PostResource;
@@ -34,7 +35,8 @@ class GoGommandCommand extends Command
         private EntityManagerInterface $em,
         private PostService $postService,
         private PostValidator $postValidator,
-        private PostResponseBuilder $postResponseBuilder
+        private PostResponseBuilder $postResponseBuilder,
+        private PostFactory $postFactory,
     )
     {
         parent::__construct();
@@ -51,19 +53,11 @@ class GoGommandCommand extends Command
             'category_id' => 1
         ]; 
 
-        $post = new Post();
-        $category = $this->em->getReference(Category::class, $data['category_id']);
+        $storePostInputDTO = $this->postFactory->makeStorePostDTO($data);
 
-        $post->setTitle($data['title']);
-        $post->setDescription($data['description']);
-        $post->setContent($data['content']);
-        $post->setPublishedAt(new DateTimeImmutable($data['published_at']));
-        $post->setStatus($data['status']);
-        $post->setCategory($category);
+        $this->postValidator->validate($storePostInputDTO);
 
-        $this->postValidator->validate($post);
-
-        $post = $this->postService->store($post);
+        $post = $this->postService->store($storePostInputDTO);
 
         $res = $this->postResponseBuilder->storePost($post);
 

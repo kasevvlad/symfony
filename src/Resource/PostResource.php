@@ -2,6 +2,7 @@
 
 namespace App\Resource;
 
+use App\DTO\Output\PostOutputDTO;
 use App\Entity\Post;
 use Symfony\Component\Serializer\SerializerInterface;
 
@@ -13,8 +14,8 @@ class PostResource
     {
         
     }
-    public function postItem(Post $post)
+    public function postItem(PostOutputDTO $postOutputDTO)
     {
-        return $this->serializer->serialize($post, 'json', ['groups' => ['post:item']]);
+        return $this->serializer->serialize($postOutputDTO, 'json', ['groups' => ['post:item']]);
     }
 }
