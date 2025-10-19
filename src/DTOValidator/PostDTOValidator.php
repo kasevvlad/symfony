@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Validator;
+namespace App\DTOValidator;
 
 use App\DTO\Input\StorePostInputDTO;
-use App\Entity\Post;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-class PostValidator
+class PostDTOValidator
 {
     public function __construct(
         private ValidatorInterface $validator

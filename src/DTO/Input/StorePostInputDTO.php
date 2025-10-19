@@ -2,6 +2,8 @@
 
 namespace App\DTO\Input;
 
+use App\Entity\Category;
+use App\Validator\Constraint\EntityExists;
 use DateTimeImmutable;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -25,6 +27,6 @@ class StorePostInputDTO
         public ?int $status = 1;
 
         #[Assert\NotNull]
-        #[Assert\Type(type: 'integer')]
+        #[EntityExists(entity: Category::class)]
         public ?int $categoryId = null;
 }
