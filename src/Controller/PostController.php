@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Post;
 use App\ResponseBuilder\PostResponseBuilder;
 use App\Service\PostService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,6 +20,11 @@ final class PostController extends AbstractController
     {
         $posts = $this->postService->index();
 
-        return $this->postResponseBuilder->indexPost($posts);
+        return $this->postResponseBuilder->toArrayFull($posts);
+    }
+
+    public function show(Post $post)
+    {
+        return $this->postResponseBuilder->toArray($post);
     }
 }

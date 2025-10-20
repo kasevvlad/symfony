@@ -4,7 +4,12 @@ controllers:
         namespace: App\Controller
     type: attribute
 
-yaml_posts:
+post_index:
     path: /post
     controller: App\Controller\PostController::index
+    methods: [GET]
+
+post_show:
+    path: /post/{post}
+    controller: App\Controller\PostController::show
     methods: [GET]
