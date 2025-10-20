@@ -50,6 +50,7 @@ class PostFactory
     {
         $postOutputDTO = new PostOutputDTO();
 
+        $postOutputDTO->id = $post->getId();
         $postOutputDTO->title = $post->getTitle();
         $postOutputDTO->description = $post->getDescription();
         $postOutputDTO->content = $post->getContent();
@@ -58,5 +59,10 @@ class PostFactory
         $postOutputDTO->category = $post->getCategory();
 
         return $postOutputDTO;
+    }
+
+    public function makePostOutputDTOs(array $posts): array
+    {
+        return array_map(fn($post) => $this->makePostOutputDTO($post), $posts);
     }
 }

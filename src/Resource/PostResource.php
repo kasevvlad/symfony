@@ -14,8 +14,13 @@ class PostResource
     {
         
     }
-    public function postItem(PostOutputDTO $postOutputDTO)
+    public function postItem(PostOutputDTO $postOutputDTO): string
     {
         return $this->serializer->serialize($postOutputDTO, 'json', ['groups' => ['post:item']]);
+    }
+
+    public function postCollection(array $posts): string
+    {
+        return $this->serializer->serialize($posts, 'json', ['groups' => ['post:item']]);
     }
 }

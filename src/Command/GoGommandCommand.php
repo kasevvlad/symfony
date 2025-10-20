@@ -32,12 +32,12 @@ class GoGommandCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $data = [
-            'title' => 'test',
+            'title' => 'test234',
             'description' => 'test',
             'content' => 'test',
             'published_at' => '2025-12-20',
             'status' => 2,
-            'category_id' => 12
+            'category_id' => 1
         ]; 
 
         $storePostInputDTO = $this->postFactory->makeStorePostDTO($data);

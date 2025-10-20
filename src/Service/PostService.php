@@ -15,10 +15,15 @@ class PostService
         private PostFactory $postFactory
     ){}
 
+    public function index(): array
+    {
+        return $this->postRepository->findAll();
+    }
+
     public function store(StorePostInputDTO $storePostInputDTO): Post
     {
         $post = $this->postFactory->makePost($storePostInputDTO);
-        return $this->postRepository->store($post, false);
+        return $this->postRepository->store($post, true);
     }
 
 }
