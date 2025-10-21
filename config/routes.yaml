@@ -13,3 +13,8 @@ post_show:
     path: /post/{post}
     controller: App\Controller\PostController::show
     methods: [GET]
+
+post_store:
+    path: /post
+    controller: App\Controller\PostController::store
+    methods: [POST]

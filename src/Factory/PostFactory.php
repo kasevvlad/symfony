@@ -39,9 +39,9 @@ class PostFactory
         $post->title = $data['title'];
         $post->description = $data['description'];
         $post->content = $data['content'];
-        $post->publishedAt = new DateTimeImmutable($data['published_at']);
+        $post->publishedAt = new DateTimeImmutable($data['publishedAt']);
         $post->status = $data['status'];
-        $post->categoryId = $data['category_id'];
+        $post->categoryId = $data['categoryId'];
 
         return $post;
     }
