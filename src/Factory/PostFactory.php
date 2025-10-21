@@ -36,12 +36,12 @@ class PostFactory
     {
         $post = new StorePostInputDTO();
 
-        $post->title = $data['title'];
-        $post->description = $data['description'];
-        $post->content = $data['content'];
-        $post->publishedAt = new DateTimeImmutable($data['publishedAt']);
-        $post->status = $data['status'];
-        $post->categoryId = $data['categoryId'];
+        $post->title = $data['title'] ?? null;
+        $post->description = $data['description'] ?? null;
+        $post->content = $data['content'] ?? null;
+        $post->publishedAt = $data['publishedAt'] ? new DateTimeImmutable($data['publishedAt']) : null;
+        $post->status = $data['status'] ?? null;
+        $post->categoryId = $data['categoryId'] ?? null;
 
         return $post;
     }
