@@ -17,8 +17,6 @@ final class PostController extends AbstractController
     public function __construct(
         private PostService $postService,
         private PostResponseBuilder $postResponseBuilder,
-        private PostFactory $postFactory,
-        private PostDTOValidator $postDTOValidator
     ){}
 
     public function index(): JsonResponse
@@ -28,13 +26,13 @@ final class PostController extends AbstractController
         return $this->postResponseBuilder->toArrayFull($posts);
     }
 
-    public function store(Request $request): JsonResponse
+    public function store(Request $request, PostFactory $postFactory, PostDTOValidator $postDTOValidator): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
 
-        $storePostInputDTO = $this->postFactory->makeStorePostDTO($data);
+        $storePostInputDTO = $postFactory->makeStorePostDTO($data);
 
-        $this->postDTOValidator->validate($storePostInputDTO);
+        $postDTOValidator->validate($storePostInputDTO);
 
         $post = $this->postService->store($storePostInputDTO);
 
