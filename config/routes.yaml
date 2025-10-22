@@ -18,3 +18,8 @@ post_store:
     path: /post
     controller: App\Controller\PostController::store
     methods: [POST]
+
+post_update:
+    path: /post/{post}
+    controller: App\Controller\PostController::update
+    methods: [PATCH]

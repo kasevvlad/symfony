@@ -31,4 +31,11 @@ class PostRepository extends ServiceEntityRepository
 
         return $post;
     }
+
+    public function update(Post $post): Post
+    {
+        $this->em->flush();
+
+        return $post;
+    }
 }

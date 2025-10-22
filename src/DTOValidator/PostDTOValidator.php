@@ -14,7 +14,7 @@ class PostDTOValidator
     {
         
     }
-    public function validate(StorePostInputDTO $post): void
+    public function validate($post): void
     {
         $errors = $this->validator->validate($post);
 

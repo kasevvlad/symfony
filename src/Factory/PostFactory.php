@@ -3,6 +3,7 @@
 namespace App\Factory;
 
 use App\DTO\Input\StorePostInputDTO;
+use App\DTO\Input\UpdatePostInputDTO;
 use App\DTO\Output\PostOutputDTO;
 use App\Entity\Category;
 use App\Entity\Post;
@@ -32,9 +33,37 @@ class PostFactory
         return $post;
     }
 
+    public function editPost(Post $post, UpdatePostInputDTO $updatePostInputDTO): Post
+    {
+        $category = $this->em->getReference(Category::class, $updatePostInputDTO->categoryId);
+
+        $post->setTitle($updatePostInputDTO->title);
+        $post->setDescription($updatePostInputDTO->description);
+        $post->setContent($updatePostInputDTO->content);
+        $post->setPublishedAt($updatePostInputDTO->publishedAt);
+        $post->setStatus($updatePostInputDTO->status);
+        $post->setCategory($category);
+
+        return $post;
+    }
+
     public function makeStorePostDTO(array $data): StorePostInputDTO
     {
         $post = new StorePostInputDTO();
+
+        $post->title = $data['title'] ?? null;
+        $post->description = $data['description'] ?? null;
+        $post->content = $data['content'] ?? null;
+        $post->publishedAt = $data['publishedAt'] ? new DateTimeImmutable($data['publishedAt']) : null;
+        $post->status = $data['status'] ?? null;
+        $post->categoryId = $data['categoryId'] ?? null;
+
+        return $post;
+    }
+
+    public function makeUpdatePostDTO(array $data): UpdatePostInputDTO
+    {
+        $post = new UpdatePostInputDTO();
 
         $post->title = $data['title'] ?? null;
         $post->description = $data['description'] ?? null;
