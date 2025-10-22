@@ -38,4 +38,10 @@ class PostRepository extends ServiceEntityRepository
 
         return $post;
     }
+
+    public function delete(Post $post): void
+    {
+        $this->em->remove($post);
+        $this->em->flush();
+    }
 }

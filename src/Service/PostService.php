@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\DTO\Input\Post\PostInputDTO;
 use App\DTO\Input\StorePostInputDTO;
 use App\DTO\Input\UpdatePostInputDTO;
 use App\Entity\Post;
@@ -21,15 +22,20 @@ class PostService
         return $this->postRepository->findAll();
     }
 
-    public function store(StorePostInputDTO $storePostInputDTO): Post
+    public function store(PostInputDTO $postInputDTO): Post
     {
-        $post = $this->postFactory->makePost($storePostInputDTO);
+        $post = $this->postFactory->createPost($postInputDTO);
         return $this->postRepository->store($post, true);
     }
 
-    public function update(Post $post, UpdatePostInputDTO $updatePostInputDTO): Post
+    public function update(Post $post, PostInputDTO $postInputDTO): Post
     {
-        $post = $this->postFactory->editPost($post, $updatePostInputDTO);
+        $post = $this->postFactory->editPost($post, $postInputDTO);
         return $this->postRepository->update($post);
+    }
+
+    public function delete(Post $post): void
+    {
+        $this->postRepository->delete($post);
     }
 }

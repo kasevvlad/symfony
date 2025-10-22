@@ -2,6 +2,7 @@
 
 namespace App\DTOValidator;
 
+use App\DTO\Input\Post\PostInputDTO;
 use App\DTO\Input\StorePostInputDTO;
 use App\Exception\ValidationException;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -14,7 +15,7 @@ class PostDTOValidator
     {
         
     }
-    public function validate($post): void
+    public function validate(PostInputDTO $post): void
     {
         $errors = $this->validator->validate($post);
 

@@ -1,13 +1,13 @@
 <?php
 
-namespace App\DTO\Input;
+namespace App\DTO\Input\Post;
 
 use App\Entity\Category;
 use App\Validator\Constraint\EntityExists;
 use DateTimeImmutable;
 use Symfony\Component\Validator\Constraints as Assert;
 
-class StorePostInputDTO
+class PostInputDTO
 {
         #[Assert\NotBlank(allowNull: null, normalizer: 'trim')]
         #[Assert\Length(min: 1, max: 255)] 

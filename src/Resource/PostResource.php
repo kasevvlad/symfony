@@ -2,8 +2,7 @@
 
 namespace App\Resource;
 
-use App\DTO\Output\PostOutputDTO;
-use App\Entity\Post;
+use App\DTO\Output\Post\PostOutputDTO;
 use Symfony\Component\Serializer\SerializerInterface;
 
 class PostResource

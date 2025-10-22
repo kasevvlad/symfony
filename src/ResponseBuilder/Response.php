@@ -7,7 +7,7 @@ use App\Factory\PostFactory;
 use App\Resource\PostResource;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-class PostResponseBuilder
+class Response
 {
     public function __construct(
         private PostResource $postResource,
@@ -22,13 +22,6 @@ class PostResponseBuilder
     }
 
     public function toArray(Post $post, int $status = 200, array $headers = [], bool $isJson = true): JsonResponse
-    {
-        $postOutputDTO = $this->postFactory->makePostOutputDTO($post);
-        $postResource = $this->postResource->postItem($postOutputDTO);
-        return new JsonResponse($postResource, $status, $headers, $isJson);
-    }
-
-    public function storePost(Post $post, int $status = 200, array $headers = [], bool $isJson = true): JsonResponse
     {
         $postOutputDTO = $this->postFactory->makePostOutputDTO($post);
         $postResource = $this->postResource->postItem($postOutputDTO);

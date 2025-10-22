@@ -2,9 +2,8 @@
 
 namespace App\Factory;
 
-use App\DTO\Input\StorePostInputDTO;
-use App\DTO\Input\UpdatePostInputDTO;
-use App\DTO\Output\PostOutputDTO;
+use App\DTO\Input\Post\PostInputDTO;
+use App\DTO\Output\Post\PostOutputDTO;
 use App\Entity\Category;
 use App\Entity\Post;
 use DateTimeImmutable;
@@ -18,7 +17,7 @@ class PostFactory
     {
         
     }
-    public function makePost(StorePostInputDTO $storePostInputDTO): Post
+    public function createPost(PostInputDTO $storePostInputDTO): Post
     {
         $post = new Post();
         $category = $this->em->getReference(Category::class, $storePostInputDTO->categoryId);
@@ -33,23 +32,23 @@ class PostFactory
         return $post;
     }
 
-    public function editPost(Post $post, UpdatePostInputDTO $updatePostInputDTO): Post
+    public function editPost(Post $post, PostInputDTO $postInputDTO): Post
     {
-        $category = $this->em->getReference(Category::class, $updatePostInputDTO->categoryId);
+        $category = $this->em->getReference(Category::class, $postInputDTO->categoryId);
 
-        $post->setTitle($updatePostInputDTO->title);
-        $post->setDescription($updatePostInputDTO->description);
-        $post->setContent($updatePostInputDTO->content);
-        $post->setPublishedAt($updatePostInputDTO->publishedAt);
-        $post->setStatus($updatePostInputDTO->status);
+        $post->setTitle($postInputDTO->title);
+        $post->setDescription($postInputDTO->description);
+        $post->setContent($postInputDTO->content);
+        $post->setPublishedAt($postInputDTO->publishedAt);
+        $post->setStatus($postInputDTO->status);
         $post->setCategory($category);
 
         return $post;
     }
 
-    public function makeStorePostDTO(array $data): StorePostInputDTO
+    public function makePostInputDTO(array $data): PostInputDTO
     {
-        $post = new StorePostInputDTO();
+        $post = new PostInputDTO();
 
         $post->title = $data['title'] ?? null;
         $post->description = $data['description'] ?? null;
@@ -61,19 +60,6 @@ class PostFactory
         return $post;
     }
 
-    public function makeUpdatePostDTO(array $data): UpdatePostInputDTO
-    {
-        $post = new UpdatePostInputDTO();
-
-        $post->title = $data['title'] ?? null;
-        $post->description = $data['description'] ?? null;
-        $post->content = $data['content'] ?? null;
-        $post->publishedAt = $data['publishedAt'] ? new DateTimeImmutable($data['publishedAt']) : null;
-        $post->status = $data['status'] ?? null;
-        $post->categoryId = $data['categoryId'] ?? null;
-
-        return $post;
-    }
 
     public function makePostOutputDTO(Post $post): PostOutputDTO
     {

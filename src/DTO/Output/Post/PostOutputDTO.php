@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DTO\Output;
+namespace App\DTO\Output\Post;
 
 use App\Entity\Category;
 use Symfony\Component\Serializer\Attribute\Groups;

@@ -23,3 +23,8 @@ post_update:
     path: /post/{post}
     controller: App\Controller\PostController::update
     methods: [PATCH]
+
+post_delete:
+    path: /post/{post}
+    controller: App\Controller\PostController::destroy
+    methods: [DELETE]
