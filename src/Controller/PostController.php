@@ -18,7 +18,8 @@ final class PostController extends AbstractController
         private Response $response,
         private PostFactory $postFactory,
         private PostDTOValidator $postDTOValidator
-    ){}
+    ) {
+    }
 
     public function index(): JsonResponse
     {
